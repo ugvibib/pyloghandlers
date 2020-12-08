@@ -18,8 +18,7 @@ LOGGING = {
     'handlers': {
         'file': {
             'level': 'DEBUG',
-            'class': 'log_handlers.PyLogRotatingFileHandler',
-            # 'class': 'log_handler_concurrent.ConcurrentRotatingFileHandler',
+            'class': 'pyloghandlers.handles.PylogRotatingFileHandler',
             'formatter': 'default',
             'filename': 'info.log',
             'max_bytes': 1024,
@@ -27,7 +26,7 @@ LOGGING = {
         },
         'time': {
             'level': 'DEBUG',
-            'class': 'log_handlers.PyLogTimedRotatingFileHandler',
+            'class': 'pyloghandlers.handles.PylogTimedRotatingFileHandler',
             'formatter': 'default',
             'filename': 'info.log',
             'when': 'S',
@@ -37,9 +36,9 @@ LOGGING = {
         }
     },
     'loggers': {
-        'root': {
-            'handlers': ['time'],
-            # 'handlers': ['file'],
+        'my_app': {
+            # 'handlers': ['time'],
+            'handlers': ['file'],
             'level': 'DEBUG',
         },
     }
@@ -52,9 +51,9 @@ def write_log(tag):
 
     import logging.config
     logging.config.dictConfig(LOGGING)
-    logger = logging.getLogger('root')
+    logger = logging.getLogger('my_app')
 
-    for i in range(0, 10000):
+    for i in range(0, 500):
         # import time
         # time.sleep(0.001)
         logger.debug(f'[{str(tag)*2}] process tag {i}')
@@ -62,7 +61,7 @@ def write_log(tag):
 
 if __name__ == '__main__':
 
-    p_count = 4
+    p_count = 1
     p_list = []
     for i in range(p_count):
         p_list.append(Process(target=write_log, args=(i+1,)))
