@@ -5,3 +5,6 @@
 # @File: PyLogRotatingFileHandler.py
 # Python版本：3.6.8
 # -------------------------------
+
+
+from pyloghandlers.handles import PylogRotatingFileHandler
